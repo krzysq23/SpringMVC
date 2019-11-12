@@ -27,7 +27,7 @@ public class SwaggerConfig {
                 .globalResponseMessage(RequestMethod.GET,
                         newArrayList(new ResponseMessageBuilder()
                                         .code(500)
-                                        .message("Brawo!")
+                                        .message(":(((!")
                                         .responseModel(new ModelRef("Error"))
                                         .build(),
                                 new ResponseMessageBuilder()

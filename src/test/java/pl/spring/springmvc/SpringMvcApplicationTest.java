@@ -8,7 +8,6 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(Karate.class)
 @CucumberOptions(features = "classpath:karate")

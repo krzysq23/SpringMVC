@@ -1,0 +1,17 @@
+package pl.spring.drools.rules;
+
+import pl.spring.models.Book;
+
+rule "ISBN for Potop"
+    when
+        bookObject : Book(title == "Potop")
+    then
+        bookObject.setIsbn("ISBN-123456789");
+    end
+
+rule "ISBN for PanTadeusz"
+    when
+        bookObject : Book(title == "Pan Tadeusz")
+    then
+        bookObject.setIsbn("ISBN-987654321");
+    end
