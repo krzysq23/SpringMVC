@@ -10,15 +10,15 @@ import org.junit.runner.RunWith;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 @RunWith(Karate.class)
-@CucumberOptions(features = "classpath:karate")
+@CucumberOptions(features = "classpath:karate/test.feature")
 public class SpringMvcApplicationTest {
 
     private static WireMockServer wireMockServer = new WireMockServer();
 
     @BeforeClass
     public static void setUp() throws Exception {
-        wireMockServer.start();
-        configureFor("localhost", 8080);
+/*        wireMockServer.start();
+        configureFor("localhost", 8082);
         stubFor(
                 get(urlEqualTo("/api/hello"))
                         .willReturn(aResponse()
@@ -32,13 +32,13 @@ public class SpringMvcApplicationTest {
                         .willReturn(aResponse()
                                 .withStatus(200)
                                 .withHeader("Content-Type", "application/json")
-                                .withBody("{ \"title\": \"Pan Tadeusz\", author: \"Adam Mickiewicz\" }")));
+                                .withBody("{ \"title\": \"Pan Tadeusz\", author: \"Adam Mickiewicz\" }")));*/
 
     }
 
     @AfterClass
     public static void tearDown() throws Exception {
-        wireMockServer.stop();
+        /*wireMockServer.stop();*/
     }
 
 }

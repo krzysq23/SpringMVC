@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = { "pl.spring", "pl.spring.controller" } )
+@ComponentScan(basePackages = { "pl.spring", "pl.spring.controller", "pl.spring.config", "pl.spring.exception"} )
 public class SpringMvcApplication {
 
     public static void main(String[] args) {
