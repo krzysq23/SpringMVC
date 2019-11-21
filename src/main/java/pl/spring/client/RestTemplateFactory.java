@@ -8,8 +8,11 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.support.BasicAuthenticationInterceptor;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
+import java.nio.charset.Charset;
 
 @Getter
 @Setter
@@ -49,6 +52,7 @@ public class RestTemplateFactory implements FactoryBean<RestTemplate>, Initializ
     public void afterPropertiesSet() {
         HttpHost host = new HttpHost(hostName, port, "http");
         restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactoryBasicAuth(host));
+        restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
         restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(login, password));
         /*restTemplate.setErrorHandler(new RestTemplateResponseErrorHandler());*/
     }

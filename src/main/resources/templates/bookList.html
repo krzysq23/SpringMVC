@@ -34,9 +34,35 @@
 
     <div class="container">
 
-        <a href="/bookList" class="btn btn-primary">Lista książek</a>
-        <br><br>
-        <a href="/userList" class="btn btn-primary">Lista użytkowników</a>
+        <a href="/addBook" class="btn btn-primary">Dodaj książkę</a>
+
+        <legend>Lista książek</legend>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Tytuł</th>
+                <th scope="col">Autor</th>
+                <th scope="col">ISBN</th>
+                <th scope="col">#</th>
+            </tr>
+            </thead>
+            </tbody>
+            <tbody th:each="book : ${list}" th:remove="tag">
+            <tr>
+                <td th:text="${book.id}"></td>
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.isbn}"></td>
+                <td>
+                    <a th:href="@{('/editBook/'+${book.isbn})}" class="btn btn-outline-warning">Edytuj</a>
+                    <a th:href="@{('/removeBook/'+${book.id})}" class="btn btn-outline-danger">Usuń</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

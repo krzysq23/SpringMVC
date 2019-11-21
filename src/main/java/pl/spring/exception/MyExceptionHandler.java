@@ -42,6 +42,7 @@ public class MyExceptionHandler implements ExceptionMapper<MyApplicationExceptio
     @ExceptionHandler(HttpClientErrorException.Unauthorized.class)
     public ModelAndView handleUnauthorizedError(HttpClientErrorException.Unauthorized e,
                                                 HttpServletRequest request, HttpServletResponse response) {
+        e.printStackTrace();
         ModelAndView model = new ModelAndView("login");
         model.addObject("error", "Problem z uwierzytelnieniem");
         return model;

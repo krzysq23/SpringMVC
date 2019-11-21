@@ -34,9 +34,35 @@
 
     <div class="container">
 
-        <a href="/bookList" class="btn btn-primary">Lista książek</a>
-        <br><br>
-        <a href="/userList" class="btn btn-primary">Lista użytkowników</a>
+        <legend>Lista użytkowników</legend>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">LOGIN</th>
+                <th scope="col">IMIĘ</th>
+                <th scope="col">NAZWISKO</th>
+                <th scope="col">EMAIL</th>
+                <th scope="col">#</th>
+            </tr>
+            </thead>
+            </tbody>
+            <tbody th:each="user : ${userList}" th:remove="tag">
+            <tr>
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.login}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.surname}"></td>
+                <td th:text="${user.email}"></td>
+                <td>
+                    <a href="#" class="btn btn-outline-warning">Zmień hasło</a>
+                    <a href="#" class="btn btn-outline-danger">Usuń</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

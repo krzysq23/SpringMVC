@@ -15,19 +15,47 @@
                 <div class="card">
                     <div class="card-header">Rejestracja</div>
                     <div class="card-body">
-                        <form  class="form-horizontal" th:action="@{/login}" method="post">
+                        <div th:if="${error != null}" class="alert alert-danger" role="alert">
+                            <span th:text="${error}" />
+                        </div>
+                        <form  class="form-horizontal" th:action="@{/createAccount}" method="post">
                             <div class="form-group row">
                                 <label for="login" class="col-md-4 col-form-label text-md-right">Login</label>
                                 <div class="col-md-6">
                                     <input type="text" id="login" class="form-control" name="login" required autofocus>
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Hasło</label>
                                 <div class="col-md-6">
                                     <input type="password" id="password" class="form-control" name="password" required>
                                 </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="firstName" class="col-md-4 col-form-label text-md-right">Imię</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="firstName" class="form-control" name="firstName" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="surname" class="col-md-4 col-form-label text-md-right">Nazwisko</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="surname" class="form-control" name="surname" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="email" class="col-md-4 col-form-label text-md-right">Email</label>
+                                <div class="col-md-6">
+                                    <input type="email" id="email" class="form-control" name="email" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Zarejestruj
+                                </button>
+                                <a href="/login" class="btn btn-link">
+                                    Wstecz
+                                </a>
                             </div>
                     </form>
                 </div>
