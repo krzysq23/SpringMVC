@@ -33,12 +33,17 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object handler) throws Exception {
-        boolean status = true;
-        RestTemplateFactory restTemplateFactory = (RestTemplateFactory) context.getBean("&restTemplateFactory");
-        if(!restTemplateFactory.isAuthorized()) {
-            ModelAndView mav = new ModelAndView("login");
-            mav.addObject("error", "Zostałeś wylogowany!");
-            throw new ModelAndViewDefiningException(mav);
+        if(!request.getRequestURI().equals("/login") &&
+                !request.getRequestURI().equals("/logout") &&
+                !request.getRequestURI().equals("/createAccount")) {
+            RestTemplateFactory restTemplateFactory = (RestTemplateFactory) context.getBean("&restTemplateFactory");
+            if(!restTemplateFactory.isAuthorized()) {
+                ModelAndView mav = new ModelAndView("login");
+                mav.addObject("error", "Zostałeś wylogowany!");
+                throw new ModelAndViewDefiningException(mav);
+            } else {
+                return true;
+            }
         } else {
             return true;
         }
