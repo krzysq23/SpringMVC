@@ -6,7 +6,6 @@ import org.apache.http.HttpHost;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.support.BasicAuthenticationInterceptor;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Component;
@@ -22,6 +21,7 @@ public class RestTemplateFactory implements FactoryBean<RestTemplate>, Initializ
     private RestTemplate restTemplate;
     private String login = "";
     private String password = "";
+    private boolean isAuthorized = false;
 
     @Value("${rest.hostName}")
     private String hostName;
