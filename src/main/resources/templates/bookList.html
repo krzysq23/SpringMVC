@@ -19,22 +19,27 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Tytuł</th>
                 <th scope="col">Autor</th>
                 <th scope="col">ISBN</th>
-                <th scope="col">#</th>
+                <th scope="col">Okładka</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
             </thead>
             </tbody>
             <tbody th:each="book : ${list}" th:remove="tag">
             <tr>
-                <td th:text="${book.id}"></td>
                 <td th:text="${book.title}"></td>
                 <td th:text="${book.author}"></td>
                 <td th:text="${book.isbn}"></td>
                 <td>
+                    <img th:src="${book.imageSrc}" alt="Image" style="max-height: 100px;">
+                </td>
+                <td>
                     <a th:href="@{('/editBook/'+${book.id})}" class="btn btn-outline-warning">Edytuj</a>
+                </td>
+                <td>
                     <a th:href="@{('/removeBook/'+${book.id})}" class="btn btn-outline-danger">Usuń</a>
                 </td>
             </tr>

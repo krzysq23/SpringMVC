@@ -42,6 +42,38 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-3 control-label" for="imageSrc">Link do zdjęcia</label>
+                                <div class="col-md-9">
+                                    <input id="imageSrc" name="imageSrc" th:value="*{imageSrc}" type="text" placeholder="ISBN" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <br>
+                            <br>
+                            <legend>Wydawnictwo</legend>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="name">Nazwa wydawnictwa</label>
+                                <div class="col-md-9">
+                                    <input id="name" name="name" th:value="*{publisher.name}" type="text" placeholder="Nazwa wydawnictwa" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="founded">Rok założenia</label>
+                                <div class="col-md-9">
+                                    <input id="founded" name="founded" th:value="*{publisher.founded}" type="text" placeholder="Rok założenia" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="location">Lokalizacja</label>
+                                <div class="col-md-9">
+                                    <input id="location" name="location" th:value="*{publisher.location}" type="text" placeholder="Lokalizacja" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <div class="col-md-6 text-right">
                                     <button type="submit" class="btn btn-primary btn-lg">Zapisz</button>
                                 </div>

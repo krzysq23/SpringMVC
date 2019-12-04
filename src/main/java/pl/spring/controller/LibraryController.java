@@ -38,7 +38,7 @@ public class LibraryController {
     public String bookList(Model model) {
         List<Book> books = bookService.getAllBook();
         model.addAttribute("list", books);
-        return "bookList";
+        return "library";
     }
 
 }

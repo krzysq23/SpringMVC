@@ -41,13 +41,13 @@ public class LoginController {
     @ApiOperation(value = "Widok główny", nickname = "Widok główny")
     @GetMapping("/")
     public String mainPage(Model model) {
-        return "redirect:/home";
+        return "redirect:/library";
     }
 
     @ApiOperation(value = "Widok główny", nickname = "Widok główny")
     @GetMapping("/home")
     public String homePage(Model model) throws HttpClientErrorException {
-        return "home";
+        return "redirect:/library";
     }
 
     @ApiOperation(value = "Widok logowania", nickname = "Widok logowania")

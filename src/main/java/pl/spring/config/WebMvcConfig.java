@@ -8,6 +8,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import pl.spring.client.AuthenticationInterceptor;
@@ -16,13 +17,6 @@ import pl.spring.models.AppUser;
 @EnableWebMvc
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-
-    @Bean
-    public ViewResolver viewResolver () {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setSuffix(".html");
-        return viewResolver;
-    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -39,4 +33,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public AppUser appUser(){
         return new AppUser();
     }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
+    }
+
 }
