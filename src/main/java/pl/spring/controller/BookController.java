@@ -1,52 +1,32 @@
 package pl.spring.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.spring.client.RestTemplateFactory;
 import pl.spring.models.Book;
-import pl.spring.service.HttpService;
+import pl.spring.service.BookService;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
 public class BookController {
 
-    @Value("${rest.url}")
-    private String uri;
-
     @Autowired
-    HttpService httpService;
-
-    @Resource(name = "&restTemplateFactory")
-    private RestTemplateFactory restTemplateFactory;
+    BookService bookService;
 
     @ApiOperation(value = "Widok książek", nickname = "Widok książek")
     @GetMapping("/bookList")
-    public String bookList(Model model) throws HttpClientErrorException {
-
-        ResponseEntity<List<Book>> bookResponse = restTemplateFactory.getObject().exchange(uri+"getAll",
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<Book>>() {});
-        List<Book> books = bookResponse.getBody();
-/*        Object[] forNow = restTemplate.getForObject(uri+"getAll", Object[].class);
-        List<Object> searchList = Arrays.asList(forNow);*/
+    public String bookList(Model model) {
+        List<Book> books = bookService.getAllBook();
         model.addAttribute("list", books);
         return "bookList";
     }
@@ -63,15 +43,12 @@ public class BookController {
             @ApiImplicitParam(name = "book", value = "obiekt Book JSON", required = true, dataType = "Book", paramType = "ModelAttribute")
     })
     @PostMapping("/addBook")
-    public String addBook(@ModelAttribute Book book, RedirectAttributes redirectAttributes) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(book);
-
-        ResponseEntity<String> loginResponse = restTemplateFactory.getObject().exchange(uri+"addBook",
-                HttpMethod.POST, httpService.getEntity(json), String.class);
-        if (loginResponse.getStatusCode() == HttpStatus.OK) {
+    public String addBook(@ModelAttribute Book book, RedirectAttributes redirectAttributes) {
+        try {
+            bookService.addBook(book);
             redirectAttributes.addAttribute("info", "Dodano książkę");
-        } else {
+        } catch (JsonProcessingException jpe) {
+            jpe.printStackTrace();
             redirectAttributes.addAttribute("info", "Nie można dodać książki");
         }
         return "redirect:/bookList";
@@ -83,8 +60,7 @@ public class BookController {
     })
     @GetMapping(value = "/removeBook/{id}")
     public String removeBook(@PathVariable String id, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addAttribute("info", "Usunięto książkę");
-        restTemplateFactory.getObject().delete(uri + "removeBook/" + id);
+        bookService.removeBookById(id);
         return "redirect:/bookList";
     }
 
@@ -94,9 +70,7 @@ public class BookController {
     })
     @GetMapping("/editBook/{id}")
     public String editBook(@PathVariable String id, Model model) {
-        ResponseEntity<Book> bookResponse = restTemplateFactory.getObject().exchange(uri+"findByIsbn-"+id,
-                HttpMethod.GET, null, new ParameterizedTypeReference<Book>() {});
-        Book book = bookResponse.getBody();
+        Book book = bookService.getBookById(id);
         model.addAttribute("book", book);
         return "addBook";
     }
