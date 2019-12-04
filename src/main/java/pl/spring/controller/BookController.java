@@ -8,8 +8,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
-import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,18 +18,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.spring.client.RestTemplateFactory;
 import pl.spring.models.Book;
 import pl.spring.service.HttpService;
 
 import javax.annotation.Resource;
-import java.nio.charset.Charset;
 import java.util.List;
 
 @Controller
-public class HomeController {
+public class BookController {
 
     @Value("${rest.url}")
     private String uri;
@@ -38,18 +37,6 @@ public class HomeController {
 
     @Resource(name = "&restTemplateFactory")
     private RestTemplateFactory restTemplateFactory;
-
-    @ApiOperation(value = "Widok główny", nickname = "Widok główny")
-    @GetMapping("/")
-    public String mainPage(Model model) {
-        return "redirect:/home";
-    }
-
-    @ApiOperation(value = "Widok główny", nickname = "Widok główny")
-    @GetMapping("/home")
-    public String homePage(Model model) throws HttpClientErrorException {
-        return "home";
-    }
 
     @ApiOperation(value = "Widok książek", nickname = "Widok książek")
     @GetMapping("/bookList")
@@ -87,7 +74,7 @@ public class HomeController {
         } else {
             redirectAttributes.addAttribute("info", "Nie można dodać książki");
         }
-        return "redirect:/home";
+        return "redirect:/bookList";
     }
 
     @ApiOperation(value = "Usuwanie książki", nickname = "Usuwanie książki")
@@ -98,7 +85,7 @@ public class HomeController {
     public String removeBook(@PathVariable String id, RedirectAttributes redirectAttributes) {
         redirectAttributes.addAttribute("info", "Usunięto książkę");
         restTemplateFactory.getObject().delete(uri + "removeBook/" + id);
-        return "redirect:/home";
+        return "redirect:/bookList";
     }
 
     @ApiOperation(value = "Metoda edutuje książkę", nickname = "Metoda edytuje książkę")
@@ -114,8 +101,4 @@ public class HomeController {
         return "addBook";
     }
 
-    @ModelAttribute("title")
-    public String fetTitle(){
-        return "SpringMVC";
-    }
 }

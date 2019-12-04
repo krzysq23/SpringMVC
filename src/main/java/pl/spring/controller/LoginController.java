@@ -12,10 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.HttpClientErrorException;
 import pl.spring.client.RestTemplateFactory;
+import pl.spring.models.AppUser;
 import pl.spring.models.User;
 import pl.spring.service.HttpService;
 
@@ -33,8 +32,23 @@ public class LoginController {
     @Autowired
     HttpService httpService;
 
+    @Resource(name = "appUser")
+    AppUser appUser;
+
     @Resource(name = "&restTemplateFactory")
     private RestTemplateFactory restTemplateFactory;
+
+    @ApiOperation(value = "Widok główny", nickname = "Widok główny")
+    @GetMapping("/")
+    public String mainPage(Model model) {
+        return "redirect:/home";
+    }
+
+    @ApiOperation(value = "Widok główny", nickname = "Widok główny")
+    @GetMapping("/home")
+    public String homePage(Model model) throws HttpClientErrorException {
+        return "home";
+    }
 
     @ApiOperation(value = "Widok logowania", nickname = "Widok logowania")
     @GetMapping("/login")
@@ -56,6 +70,9 @@ public class LoginController {
             model.addAttribute("error" , "Nieporawny login lub hasło!");
             restTemplateFactory.setAuthorized(false);
         } else {
+            ResponseEntity<AppUser> responseUser = restTemplateFactory.getObject()
+                    .exchange(uri + "findByLogin-" + login, HttpMethod.GET, null, AppUser.class);
+            appUser.updateAppUser(responseUser.getBody());
             restTemplateFactory.setAuthorized(true);
         }
         return navigateURL;
