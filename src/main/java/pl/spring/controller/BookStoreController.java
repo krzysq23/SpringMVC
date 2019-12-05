@@ -56,7 +56,7 @@ public class BookStoreController {
     			.findAny()
     			.orElse(null);
     	if(book != null) {
-    		book.setQty(book.getQty()+1);
+    		book.setQty(book.getQty()+ 1);
     	} else {
     		book = bookService.getBookById(bookId);
     		book.setQty(1);

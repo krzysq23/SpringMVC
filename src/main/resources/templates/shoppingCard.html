@@ -42,7 +42,7 @@
 							<span th:text="${book.title}"></span> ( autor: <span th:text="${book.author}"></span> )
 						</td>
 						<td>
-							<input type="text" class="form-control" value="1" style="width: 100px; text-align: center;" readonly />
+							<input type="text" class="form-control" th:value="*{book.qty}" id="qty" style="width: 100px; text-align: center;" readonly />
 						</td>
 						<td> 
 							<div class="price-wrap"> 
@@ -101,7 +101,9 @@
 	function priceAddition() {
 		var i = 0;
 		$('[id=productPrice]').each(function( index ) {
-		  	i+=parseInt($(this).text());
+			var qty = parseInt($(this).parent().parent().parent().parent().find("#qty").val());
+			var price = parseInt($(this).text());
+		  	i += (price * qty) ;
 		});
 		$('#priceSum').text(i + " zł");
 	}

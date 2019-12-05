@@ -22,7 +22,7 @@ public class Book implements Serializable {
     private double price;
     private Publisher publisher = new Publisher();
 
-    private transient Integer qty;
+    private transient int qty;
     
     public Book(String title, String author, String isbn) {
         this.title = title;
