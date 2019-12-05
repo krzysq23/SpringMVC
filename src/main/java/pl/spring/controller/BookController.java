@@ -44,7 +44,7 @@ public class BookController {
     })
     @PostMapping("/addBook")
     public String addBook(@ModelAttribute Book book, RedirectAttributes redirectAttributes) {
-        try {
+    	try { 
             bookService.addBook(book);
             redirectAttributes.addAttribute("info", "Dodano książkę");
         } catch (JsonProcessingException jpe) {

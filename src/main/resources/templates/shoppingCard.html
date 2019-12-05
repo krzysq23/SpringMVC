@@ -12,6 +12,9 @@
 	    position: absolute;
 	    margin-left: 60px;
 	}
+	.price-wrap {
+		text-align: center;
+	}
 </style>
 <body>
 
@@ -43,11 +46,11 @@
 						</td>
 						<td> 
 							<div class="price-wrap"> 
-								<var class="price">20.50 zł</var> 
+								<var class="price"><span id="productPrice" th:text="${book.price}"> </span> zł</var> 
 							</div>
 						</td>
 						<td class="text-right">  
-							<button id="remove" class="btn btn-outline-danger"> × Remove</button>
+							<button id="remove" th:attr="data-id=${book.id}" class="btn btn-outline-danger"> × Usuń</button>
 						</td>
 					</tr>
 				</tbody>
@@ -57,7 +60,7 @@
                         <td></td>
                         <td></td>
                         <td><h3>Suma:</h3></td>
-                        <td class="text-right"><h3>31.53 zł</h3></td>
+                        <td class="text-right"><h3 id="priceSum">zł</h3></td>
                     </tr>
                     <tr>
                         <td></td>
@@ -67,10 +70,12 @@
 	                            <span class="fa fa-shopping-cart"></span> Kontynuuj zakupy
 	                        </a>
                         </td>
-                        <td><td>
-                        <button type="button" class="btn btn-success">
-                            Zamów <span class="fas fa-play"></span>
-                        </button></td>
+                        <td></td>
+                        <td>
+	                        <button type="button" class="btn btn-success">
+	                            Zamów <span class="fas fa-play"></span>
+	                        </button>
+                        </td>
                     </tr>
                 </tfoot>
 			</table>
@@ -81,8 +86,24 @@
 </body>
 
 <script type="text/javascript">
+	$( document ).ready(function() {
+		priceAddition();
+	});
 	$( "[id=remove]" ).click(function() {
-		$(this).parent().parent().remove()
+		var bookId = $(this).data("id");
+		jQuery.get("/removeFromCard/" + bookId, function(data, status){
+		    var element = $('#productCounter');
+		    element.text(parseInt(element.text()) - 1);
+		});
+		$(this).parent().parent().remove();
+		priceAddition();
 	})
+	function priceAddition() {
+		var i = 0;
+		$('[id=productPrice]').each(function( index ) {
+		  	i+=parseInt($(this).text());
+		});
+		$('#priceSum').text(i + " zł");
+	}
 </script>
 </html>

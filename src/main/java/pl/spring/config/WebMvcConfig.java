@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import pl.spring.client.AuthenticationInterceptor;
 import pl.spring.models.AppUser;
+import pl.spring.models.ShoppingCard;
 
 @EnableWebMvc
 @Configuration
@@ -32,6 +33,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
     public AppUser appUser(){
         return new AppUser();
+    }
+    
+    @Bean
+    @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+    public ShoppingCard shoppingCard(){
+        return new ShoppingCard();
     }
 
     @Override

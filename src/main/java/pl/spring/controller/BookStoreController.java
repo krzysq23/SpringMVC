@@ -2,6 +2,8 @@ package pl.spring.controller;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.swagger.annotations.ApiOperation;
 import pl.spring.models.Book;
+import pl.spring.models.ShoppingCard;
 import pl.spring.service.BookService;
 
 @Controller
@@ -19,6 +22,9 @@ public class BookStoreController {
     @Autowired
     BookService bookService;
 
+    @Resource(name = "shoppingCard")
+    ShoppingCard shoppingCard;
+    
     @ApiOperation(value = "Widok księgarni")
     @GetMapping("/library")
     public String bookList(Model model) {
@@ -38,15 +44,35 @@ public class BookStoreController {
     @ApiOperation(value = "Widok koszyka")
     @GetMapping("/shoppingCard")
     public String shoppingCard(Model model) {
-        List<Book> books = bookService.getAllBook();
-        model.addAttribute("list", books);
+        model.addAttribute("list", shoppingCard.getBookList());
         return "shoppingCard";
     }
     
-    @ApiOperation(value = "Widok koszyka")
+    @ApiOperation(value = "Dodawanie elementu do koszka")
     @GetMapping("/addToCard/{bookId}")
-    public @ResponseBody String addToCard(@PathVariable String bookId) {
-    	System.out.println(bookId);
+    public String addToCard(@PathVariable String bookId) {
+    	Book book = shoppingCard.getBookList().stream()
+    			.filter(b -> b.getId().equals(bookId))
+    			.findAny()
+    			.orElse(null);
+    	if(book != null) {
+    		book.setQty(book.getQty()+1);
+    	} else {
+    		book = bookService.getBookById(bookId);
+    		book.setQty(1);
+    		shoppingCard.getBookList().add(book);
+    		shoppingCard.setCounter(shoppingCard.getCounter() + 1);
+    	}
+        return "redirect:/shoppingCard";
+    }
+    
+    @ApiOperation(value = "Usuwanie elementu z koszyka")
+    @GetMapping("/removeFromCard/{bookId}")
+    public @ResponseBody String removeFromCard(@PathVariable String bookId) {
+    	shoppingCard.getBookList()
+    		.removeIf(b -> b.getId().equals(bookId));
+    	shoppingCard.setCounter(shoppingCard.getCounter() -1);
         return bookId;
     }
+    
 }

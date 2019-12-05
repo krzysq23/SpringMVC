@@ -10,8 +10,8 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 public class AppUser implements Serializable {
-
-    private String id;
+	
+	private String id;
     private String login;
     private String firstName;
     private String surname;

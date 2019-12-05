@@ -21,30 +21,37 @@
                             <input type="hidden" name="id" th:value="*{id}" />
 
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="title">Tytuł</label>
+                                <label class="col-md-3 control-label">Tytuł</label>
                                 <div class="col-md-9">
-                                    <input id="title" name="title" th:value="*{title}" type="text" placeholder="Tytuł" class="form-control" required>
+                                    <input th:field="*{title}" th:value="*{title}" type="text" placeholder="Tytuł" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="author">Autor</label>
+                                <label class="col-md-3 control-label">Autor</label>
                                 <div class="col-md-9">
-                                    <input id="author" name="author" th:value="*{author}" type="text" placeholder="Autor" class="form-control" required>
+                                    <input th:field="*{author}" th:value="*{author}" type="text" placeholder="Autor" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="isbn">Kod ISBN</label>
+                                <label class="col-md-3 control-label">Kod ISBN</label>
                                 <div class="col-md-9">
-                                    <input id="isbn" name="isbn" th:value="*{isbn}" type="text" placeholder="ISBN" class="form-control" required>
+                                    <input th:field="*{isbn}" th:value="*{isbn}" type="text" placeholder="ISBN" class="form-control" required>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="col-md-3 control-label" for="imageSrc">Link do zdjęcia</label>
+                            
+							<div class="form-group">
+                                <label class="col-md-3 control-label">Cena</label>
                                 <div class="col-md-9">
-                                    <input id="imageSrc" name="imageSrc" th:value="*{imageSrc}" type="text" placeholder="ISBN" class="form-control" required>
+                                    <input th:field="*{price}" th:value="*{price}" type="number" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Link do zdjęcia</label>
+                                <div class="col-md-9">
+                                    <input th:field="*{imageSrc}" th:value="*{imageSrc}" type="text" placeholder="Img src" class="form-control" required>
                                 </div>
                             </div>
 
@@ -53,23 +60,23 @@
                             <legend>Wydawnictwo</legend>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="name">Nazwa wydawnictwa</label>
+                                <label class="col-md-4 control-label">Nazwa wydawnictwa</label>
                                 <div class="col-md-9">
-                                    <input id="name" name="name" th:value="*{publisher.name}" type="text" placeholder="Nazwa wydawnictwa" class="form-control" required>
+                                    <input th:field="*{publisher.name}" th:value="*{publisher.name}" type="text" placeholder="Nazwa wydawnictwa" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="founded">Rok założenia</label>
+                                <label class="col-md-3 control-label">Rok załóżenia</label>
                                 <div class="col-md-9">
-                                    <input id="founded" name="founded" th:value="*{publisher.founded}" type="text" placeholder="Rok założenia" class="form-control" required>
+                                    <input th:field="*{publisher.founded}" th:value="*{publisher.founded}" type="text" placeholder="Rok założenia" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="location">Lokalizacja</label>
+                                <label class="col-md-3 control-label">Lokalizacja</label>
                                 <div class="col-md-9">
-                                    <input id="location" name="location" th:value="*{publisher.location}" type="text" placeholder="Lokalizacja" class="form-control" required>
+                                    <input th:field="*{publisher.location}" th:value="*{publisher.location}" type="text" placeholder="Lokalizacja" class="form-control" required>
                                 </div>
                             </div>
 
