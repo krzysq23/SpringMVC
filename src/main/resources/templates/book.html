@@ -21,10 +21,27 @@
 
             <div class="container">
                 <div class="row">
+                
                     <div class="col-md-5 img">
                         <img th:src="${book.imageSrc}" alt="img" class="img-rounded" style="max-width: 200px;" >
                     </div>
+                    
                     <div class="col-md-7 details">
+                    
+                    	<div class="row">
+    						<div class="col-sm">
+    							<span style="font-weight: bold;">Cena: </span>
+    							<span th:text="'1 zł'"></span>
+    						</div>
+    						<div class="col-sm">
+    							<button th:attr="onclick=|addToCard('${book.id}')|" class="btn btn-sm btn-info">
+					              Do koszyka
+					              <i class="fa fa-shopping-cart"></i>
+					            </button>
+    						</div>
+                    	</div>
+
+                    
                         <blockquote>
                             <h1 style="text-align: center;" th:text="${book.title}"></h1>
                         </blockquote>
@@ -83,7 +100,13 @@
 </body>
 
 <script type="text/javascript">
-
+	function addToCard(bookId) {
+		jQuery.get("/addToCard/" + bookId, function(data, status){
+		    var element = $('#productCounter');
+		    element.text(parseInt(element.text()) + 1);
+		 });
+	}
+	
 </script>
 
 </html>
