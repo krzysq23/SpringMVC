@@ -20,7 +20,7 @@
         <div class="items">
 
             <div class="items" th:each="book : ${list}" th:remove="tag">
-                <div data-price="290" class="item">
+                <div th:attr="data-id=${book.id}" class="item">
                     <img th:src="${book.imageSrc}" alt="Image"  class="img-item" />
                     <div class="info">
                         <h3 th:text="${book.title}"></h3>
@@ -36,7 +36,10 @@
 </body>
 
 <script type="text/javascript">
-
+    $( "div.item" ).click(function() {
+        var bookId = $(this).data("id");
+        window.document.location.href = "/book/" + bookId;
+    });
 </script>
 
 </html>

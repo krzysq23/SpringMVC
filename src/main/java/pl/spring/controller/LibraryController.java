@@ -41,4 +41,12 @@ public class LibraryController {
         return "library";
     }
 
+    @ApiOperation(value = "Widok książki")
+    @GetMapping("/book/{id}")
+    public String bookView(@PathVariable String id, Model model) {
+        Book book = bookService.getBookById(id);
+        model.addAttribute("book", book);
+        return "book";
+    }
+
 }

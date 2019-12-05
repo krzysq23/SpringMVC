@@ -63,7 +63,7 @@ body {
 }
 
 /*ITEMS!!!*/
-img {
+.item img {
     width: 100px;
     height: 130px;
     margin-top: 10px;
@@ -222,4 +222,26 @@ h5 {
     border: 1px solid rgb(207, 207, 207);
     background: #090;
     border-image: initial;
+}
+
+div.item:hover {
+    opacity: 0.6;
+    background-color: black;
+    cursor: pointer;
+    color: white;
+}
+
+.container{
+    padding:5%;
+}
+.container .img{
+    text-align:center;
+    max-width: 250px;
+}
+.container .details{
+    border-left:3px solid #4c49575c;
+}
+.container .details p{
+    font-size:15px;
+    font-weight:bold;
 }
