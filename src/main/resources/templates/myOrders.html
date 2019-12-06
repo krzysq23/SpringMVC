@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Zamówienia</title>
+    <header th:replace="master/header :: header"> </header>
+</head>
+<style type="text/css">
+	.price-wrap {
+		text-align: center;
+	}
+	.input-group-text {
+		width: 100px;
+	}
+</style>
+<body>
+
+    <header id="header" class="alt" th:include="master/menu :: title-menu" />
+
+    <div class="container">
+
+		<div th:if="${info != null}" class="alert alert-success" role="alert">
+			<strong th:text="${info}"></strong>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		
+		<h1 class="display-4">Twoje zamówienia</h1><br>
+		
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Książka</th>
+					<th scope="col">Ilość</th>
+					<th scope="col" width="130px">Cena</th>
+				</tr>
+			</thead>
+			<tbody th:each="book : ${list}" th:remove="tag">
+				<tr>
+					<th scope="row">
+						<span th:text="${bookStat.index}+1"></span>
+					</th>
+					<td>
+						<span th:text="${book.title}"></span> ( autor: <span th:text="${book.author}"></span> )
+					</td>
+					<td>
+						<input type="text" class="form-control" th:value="*{book.qty}" id="qty" style="width: 100px; text-align: center;" readonly />
+					</td>
+					<td>
+						<div class="price-wrap"> 
+							<var class="price"><span id="productPrice" th:text="${book.price}"> </span> zł</var> 
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		
+    </div>
+
+</body>
+
+<script type="text/javascript">
+
+</script>
+</html>

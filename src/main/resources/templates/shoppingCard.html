@@ -46,7 +46,7 @@
 						</td>
 						<td> 
 							<div class="price-wrap"> 
-								<var class="price"><span id="productPrice" th:text="${book.price}"> </span> zł</var> 
+								<var class="price"><span id="productPrice" th:attr="data-qty=${book.qty}" th:text="${book.price}"> </span> zł</var> 
 							</div>
 						</td>
 						<td class="text-right">  
@@ -72,9 +72,9 @@
                         </td>
                         <td></td>
                         <td>
-	                        <button type="button" class="btn btn-success">
+	                        <a href="/productsOrder" class="btn btn-success">
 	                            Zamów <span class="fas fa-play"></span>
-	                        </button>
+	                        </a>
                         </td>
                     </tr>
                 </tfoot>
@@ -101,7 +101,7 @@
 	function priceAddition() {
 		var i = 0;
 		$('[id=productPrice]').each(function( index ) {
-			var qty = parseInt($(this).parent().parent().parent().parent().find("#qty").val());
+			var qty = parseInt($(this).data("qty"))
 			var price = parseInt($(this).text());
 		  	i += (price * qty) ;
 		});

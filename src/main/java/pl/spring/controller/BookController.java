@@ -46,10 +46,10 @@ public class BookController {
     public String addBook(@ModelAttribute Book book, RedirectAttributes redirectAttributes) {
     	try { 
             bookService.addBook(book);
-            redirectAttributes.addAttribute("info", "Dodano książkę");
+            redirectAttributes.addFlashAttribute("info", "Dodano książkę");
         } catch (JsonProcessingException jpe) {
             jpe.printStackTrace();
-            redirectAttributes.addAttribute("info", "Nie można dodać książki");
+            redirectAttributes.addFlashAttribute("info", "Nie można dodać książki");
         }
         return "redirect:/bookList";
     }

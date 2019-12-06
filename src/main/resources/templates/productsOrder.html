@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Book List</title>
+    <header th:replace="master/header :: header"> </header>
+</head>
+<style type="text/css">
+	.price-wrap {
+		text-align: center;
+	}
+	.input-group-text {
+		width: 100px;
+	}
+</style>
+<body>
+
+    <header id="header" class="alt" th:include="master/menu :: title-menu" />
+
+    <div class="container">
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Książka</th>
+					<th scope="col">Ilość</th>
+					<th scope="col" width="130px">Cena</th>
+				</tr>
+			</thead>
+			<tbody th:each="book : ${list}" th:remove="tag">
+				<tr>
+					<th scope="row">
+						<span th:text="${bookStat.index}+1"></span>
+					</th>
+					<td>
+						<span th:text="${book.title}"></span> ( autor: <span th:text="${book.author}"></span> )
+					</td>
+					<td>
+						<input type="text" class="form-control" th:value="*{book.qty}" id="qty" style="width: 100px; text-align: center;" readonly />
+					</td>
+					<td>
+						<div class="price-wrap"> 
+							<var class="price"><span id="productPrice" th:text="${book.price}"> </span> zł</var> 
+						</div>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><h3>Suma:</h3></td>
+                    <td class="text-right"><h3 id="priceSum">zł</h3></td>
+                </tr>
+            </tfoot>
+		</table>
+
+		<form  class="form-horizontal" th:action="@{/createProductsOrder}" method="post">
+			<fildset>
+			
+			<div class="col-md-6">
+			
+				<legend>Wybierz rodzaj przesyłki</legend>
+				
+				<select class="form-control" name="delivery">
+	                <option>Paczkomat InPost</option>
+	                <option>Kurier DHL</option>
+	                <option>Poczta Polska</option>
+	                <option>List polecony</option>
+	                <option>Punkt ruchu</option>
+	            </select>
+				<br><br>
+				<legend>Wybierz rodzaj płatności</legend>
+				
+				<select class="form-control" name="payment">
+	                <option>Paczkomat InPost</option>
+	                <option>Kurier DHL</option>
+	                <option>Poczta Polska</option>
+	                <option>List polecony</option>
+	                <option>Punkt ruchu</option>
+	            </select>
+	            <br><br>
+				<legend>Dane do wysyłki</legend>
+				
+				<div class="input-group mb-3">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text" id="basic-addon1">Adres</span>
+				  </div>
+				  <input type="text" class="form-control" name="deliveryAdres" placeholder="Adres" aria-label="Adres" aria-describedby="basic-addon1" required>
+				</div>
+				
+				<div class="input-group mb-3">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text" id="basic-addon1">Telefon</span>
+				  </div>
+				  <input type="tel" class="form-control" name="phone" placeholder="Telefon" aria-label="Telefon" aria-describedby="basic-addon1" required>
+				</div>
+				
+				<div class="input-group mb-3">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text" id="basic-addon1">Email</span>
+				  </div>
+				  <input type="email" class="form-control" name="email" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" required>
+				</div>
+				
+				<br>
+				<div class="text-center">
+					<button type="submit" class="btn btn-primary btn-lg">Wyślij zamówienie</button>
+				</div>
+				<br><br>
+				
+			</div>
+			
+			</fildset>
+		</form>
+		
+    </div>
+
+</body>
+
+<script type="text/javascript">
+	
+</script>
+</html>

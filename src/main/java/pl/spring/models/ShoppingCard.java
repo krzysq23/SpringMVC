@@ -14,6 +14,12 @@ import java.util.List;
 public class ShoppingCard implements Serializable {
 	
 	private int counter = 0;
+	private double price = 0;
 	private List<Book> bookList = new ArrayList<>();
 
+	public void cleanCard() {
+		this.counter = 0;
+		this.price = 0;
+		this.bookList = new ArrayList<>();
+	}
 }
