@@ -32,31 +32,27 @@
 			<thead>
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">Data zamówienia</th>
-					<th scope="col">Status zamówienia</th>
-					<th scope="col">Kwota</th>
-					<th scope="col" width="210px"></th>
+					<th scope="col">Książka</th>
+					<th scope="col">Ilość</th>
+					<th scope="col" width="130px">Cena</th>
 				</tr>
 			</thead>
-			<tbody th:each="order : ${list}" th:remove="tag">
+			<tbody th:each="book : ${list}" th:remove="tag">
 				<tr>
 					<th scope="row">
-						<span th:text="${orderStat.index}+1"></span>
+						<span th:text="${bookStat.index}+1"></span>
 					</th>
 					<td>
-						<span th:text="${#dates.format(order.dateCreated, 'dd-MMM-yyyy HH:mm')}"></span>
+						<span th:text="${book.title}"></span> ( autor: <span th:text="${book.author}"></span> )
 					</td>
 					<td>
-						<span th:text="${order.status}"></span>
+						<input type="text" class="form-control" th:value="*{book.qty}" id="qty" style="width: 100px; text-align: center;" readonly />
 					</td>
 					<td>
-						<div class="price-wrap">
-							<span th:text="${order.amount + ' zł' }"></span>
+						<div class="price-wrap"> 
+							<var class="price"><span id="productPrice" th:text="${book.price}"> </span> zł</var> 
 						</div>
 					</td>
-					<td>
-	                    <a th:href="@{('/orderDetails/'+${order.id})}" class="btn btn-primary">Szczegóły zamówienia</a>
-	                </td>
 				</tr>
 			</tbody>
 		</table>
