@@ -99,4 +99,17 @@ public class OrderController {
 		}
         
     }
+    
+    @ApiOperation(value = "Opłacenie zamówienia")
+    @GetMapping("/payForOrder/{orderId}")
+    public String payForOrder(@PathVariable String orderId, RedirectAttributes redirectAttributes) {
+    	boolean status = orderService.payForOrder(orderId);
+		if(status) {
+			redirectAttributes.addFlashAttribute("info", "Zamówienie zostało opłacone!");
+		} else {
+			redirectAttributes.addFlashAttribute("info", "Zamówienie nie zostało opłacone");
+		}
+        return "redirect:/myOrders";
+    }
+    
 }

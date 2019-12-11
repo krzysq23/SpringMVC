@@ -9,4 +9,5 @@ public interface OrderService {
     boolean saveOrder(String json);
     List<Order> getOrderByUser(String login);
     Order getOrderById(String orderId);
+    boolean payForOrder(String orderId);
 }

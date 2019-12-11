@@ -26,31 +26,82 @@
 			</button>
 		</div>
 		
-		<h1 class="display-4">Twoje zamówienia</h1><br>
+		<h1 class="display-4">Zamówienie z dnia <span th:text="${#dates.format(order.dateCreated, 'dd-MMM-yyyy')}"></span></h1><br>
+		
+		<h1 class="display-4" style="font-size: 30px !important;">Informacje o zmówieniu</h1><br>
+		
+		<div class="col-md-8">
+		
+			<table class="table table-bordered success">
+				<thead>
+					<tr>
+						<th>Data zamówienia</th>
+						<td th:text="${#dates.format(order.dateCreated, 'dd-MMM-yyyy')}"></td>
+					</tr>
+					<tr>
+						<th>Płatność</th>
+						<td th:text="${order.payment}"></td>
+					</tr>
+					<tr>
+						<th>Dostawa</th>
+						<td th:text="${order.delivery}"></td>
+					</tr>
+					<tr>
+						<th>Adres zamówienia</th>
+						<td th:text="${order.adress}"></td>
+					</tr>
+					<tr>
+						<th>Telefon</th>
+						<td th:text="${order.phone}"></td>
+					</tr>
+					<tr>
+						<th>Email</th>
+						<td th:text="${order.email}"></td>
+					</tr>
+					<tr>
+						<th>Status</th>
+						<td>
+							<span th:text="${order.status}"></span>
+							<a th:href="@{('/payForOrder/'+${order.id})}" class="btn btn-sm btn-primary" 
+							 	style="float: right;" th:if="${order.status=='OCZEKUJACY_NA_PLATNOSC'}">Opłać zamówienie</a>
+						</td>
+					</tr>
+				</thead>
+
+			</table>
+			
+		</div>
+		
+		
+		<h1 class="display-4" style="font-size: 30px !important;">Lista pozycji</h1><br>
 		
 		<table class="table">
 			<thead>
 				<tr>
 					<th scope="col">#</th>
 					<th scope="col">Książka</th>
+					<th scope="col"></th>
 					<th scope="col">Ilość</th>
 					<th scope="col" width="130px">Cena</th>
 				</tr>
 			</thead>
-			<tbody th:each="book : ${list}" th:remove="tag">
+			<tbody th:each="pos : ${order.positions}" th:remove="tag">
 				<tr>
 					<th scope="row">
-						<span th:text="${bookStat.index}+1"></span>
+						<span th:text="${posStat.index}+1"></span>
+					</th>
+					<th>
+						<img th:src="${pos.book.imageSrc}" alt="Image" style="max-height: 100px;">
 					</th>
 					<td>
-						<span th:text="${book.title}"></span> ( autor: <span th:text="${book.author}"></span> )
+						<span th:text="${pos.book.title}"></span> ( autor: <span th:text="${pos.book.author}"></span> )
 					</td>
 					<td>
-						<input type="text" class="form-control" th:value="*{book.qty}" id="qty" style="width: 100px; text-align: center;" readonly />
+						<input type="text" class="form-control" th:value="*{pos.quantity}" id="qty" style="width: 100px; text-align: center;" readonly />
 					</td>
 					<td>
 						<div class="price-wrap"> 
-							<var class="price"><span id="productPrice" th:text="${book.price}"> </span> zł</var> 
+							<var class="price"><span id="productPrice" th:text="${pos.book.price}"> </span> zł</var> 
 						</div>
 					</td>
 				</tr>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -50,6 +51,19 @@ public class OrderServiceImp implements OrderService {
 		ResponseEntity<Order> bookResponse = restTemplateFactory.getObject().exchange(uri + "findOrderById/" + orderId,
                 HttpMethod.GET, null, new ParameterizedTypeReference<Order>() {});
         return bookResponse.getBody();
+	}
+
+	@Override
+	public boolean payForOrder(String orderId) {
+		JSONObject json = new JSONObject();
+		json.put("orderId", orderId);
+		ResponseEntity<String> loginResponse = restTemplateFactory.getObject().exchange(uri + "payForOrder",
+                HttpMethod.POST, httpService.getEntity(json.toString()), String.class);
+        if (loginResponse.getStatusCode() == HttpStatus.OK) {
+            return true;
+        } else {
+            return false;
+        }
 	}
 	
 
